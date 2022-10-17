@@ -89,20 +89,18 @@ class UserController extends Controller
 
     public function update(Request $request, $id) {
         $rules = [
-            'name'      => 'required',
+            'parent_name'      => 'required',
             'email'     => 'required|email|unique:users,email,'.$id,
             'password'  => 'required|min:8',
-            'phone'     => 'required',
         ];
 
         $message = [
-            'name.required'     => 'Mohon isikan nama anda',
+            'parent_name.required'     => 'Mohon isikan nama anda',
             'email.required'    => 'Mohon isikan email anda',
             'email.email'       => 'Mohon isikan email valid',
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'phone.required'    => 'Mohon isikan nomor hp anda',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -114,16 +112,16 @@ class UserController extends Controller
         try {
             DB::transaction(function () use ($request, $id) {
                 User::where('id', $id)->update([
-                    'name'  => $request->name,
+                    'parent_name'  => $request->parent_name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
+                    'phone'         => $request->phone,
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
 
                 UserDetail::where('user_id', $id)->update([
                     'address'       => $request->address,
                     'student_name' => $request->student_name,
-                    'phone'         => $request->phone,
                     'updated_at'    => date('Y-m-d H:i:s')
                 ]);
             });
