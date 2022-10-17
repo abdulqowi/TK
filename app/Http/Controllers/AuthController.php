@@ -15,7 +15,8 @@ use Laravel\Passport\Token;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $rules = [
             'email'     => 'required|email',
             'password'  => 'required|min:8',
@@ -30,7 +31,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $message);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
         }
 
@@ -39,8 +40,8 @@ class AuthController extends Controller
             'password'  => $request->password,
         ];
 
-        if(!Auth::attempt($data)) {
-            return apiResponse(400, 'error', 'Data tidak terdaftar, akun bodong nya?');
+        if (!Auth::attempt($data)) {
+            return apiResponse(400, 'error', 'Data tidak terdaftar, akun bodong ya? Fuck u');
         }
 
         $token = Auth::user()->createToken('API Token')->accessToken;
@@ -53,14 +54,13 @@ class AuthController extends Controller
         return apiResponse(200, 'success', 'berhasil login', $data);
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $rules = [
-            'name'      => 'required',
+            'name'=> 'required',
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8',
-            'address'   => 'required',
             'phone'     => 'required',
-            'hobby'     => 'required',
         ];
 
         $message = [
@@ -70,42 +70,41 @@ class AuthController extends Controller
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'address.required'  => 'Mohon isikan alamat anda',
             'phone.required'    => 'Mohon isikan nomor hp anda',
-            'hobby.required'    => 'Mohon isikan hobi anda',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
         }
 
         try {
             DB::transaction(function () use ($request) {
                 $id = User::insertGetId([
-                    'name'  => $request->name,
+                    'parent_name'  => $request->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
+                    'phone'         => $request->phone,
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
 
                 UserDetail::insert([
                     'user_id'       => $id,
                     'address'       => $request->address,
-                    'phone'         => $request->phone,
-                    'hobby'         => $request->hobby,
+                    'student_name' => $request->student_name,
                     'created_at'    => date('Y-m-d H:i:s')
                 ]);
             });
 
             return apiResponse(201, 'success', 'user berhasil daftar');
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
     }
-    public function logout() {
-        if(Auth::user()) {
+    public function logout()
+    {
+        if (Auth::user()) {
             $tokens = Auth::user()->tokens->pluck('id');
 
             Token::whereIn('id', $tokens)->update([

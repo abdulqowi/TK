@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function index() {
-        $user = User::select([
-            
-        ])->get();
+        $user = User::get();
 
         return apiResponse(200, 'success', 'List user', $user);
     }
@@ -43,12 +41,10 @@ class UserController extends Controller
 
     public function store(Request $request) {
         $rules = [
-            'name'      => 'required',
+            'parent_name'      => 'required',
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8',
-            'address'   => 'required',
             'phone'     => 'required',
-            'hobby'     => 'required',
         ];
 
         $message = [
@@ -58,9 +54,7 @@ class UserController extends Controller
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'address.required'  => 'Mohon isikan alamat anda',
             'phone.required'    => 'Mohon isikan nomor hp anda',
-            'hobby.required'    => 'Mohon isikan hobi anda',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -82,7 +76,7 @@ class UserController extends Controller
                     'user_id'       => $id,
                     'address'       => $request->address,
                     'phone'         => $request->phone,
-                    'hobby'         => $request->hobby,
+                    'student_name'         => $request->student_name,
                     'created_at'    => date('Y-m-d H:i:s')
                 ]);
             });
@@ -98,9 +92,7 @@ class UserController extends Controller
             'name'      => 'required',
             'email'     => 'required|email|unique:users,email,'.$id,
             'password'  => 'required|min:8',
-            'address'   => 'required',
             'phone'     => 'required',
-            'hobby'     => 'required',
         ];
 
         $message = [
@@ -110,9 +102,7 @@ class UserController extends Controller
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'address.required'  => 'Mohon isikan alamat anda',
             'phone.required'    => 'Mohon isikan nomor hp anda',
-            'hobby.required'    => 'Mohon isikan hobi anda',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -132,8 +122,8 @@ class UserController extends Controller
 
                 UserDetail::where('user_id', $id)->update([
                     'address'       => $request->address,
+                    'student_name' => $request->student_name,
                     'phone'         => $request->phone,
-                    'hobby'         => $request->hobby,
                     'updated_at'    => date('Y-m-d H:i:s')
                 ]);
             });

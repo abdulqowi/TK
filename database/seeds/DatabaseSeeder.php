@@ -1,6 +1,8 @@
 <?php
 
+use App\Receipt;
 use Illuminate\Database\Seeder;
+use Receipt as GlobalReceipt;
 
 class DatabaseSeeder extends Seeder
 {
