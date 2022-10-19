@@ -31,9 +31,9 @@ class UserController extends Controller
     }
 
     public function show($id) {
-        $user = User::where('id', $id)->first();
+        $user = UserDetail::where('id', $id)->first();
         if($user) {
-            return apiResponse(200, 'success', 'data '.$user->name, $user->detail);
+            return apiResponse(200, 'success', '', $user);
         }
 
         return apiResponse(404, 'not found', 'User tidak ditemukan :(');

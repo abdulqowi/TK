@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
+use PhpParser\Node\Stmt\Return_;
 
 class User extends Authenticatable
 {
@@ -40,6 +41,6 @@ class User extends Authenticatable
     ];
 
     public function detail() {
-        return $this->belongsTo(UserDetail::class,'id');
+        return $this->belongsToMany(UserDetail::class,'id');
     }
 }

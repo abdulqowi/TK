@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receipt extends Model
 {
-    protected $fillable = ['user_id', 'course_list_id','product_details_id'];
+    protected $fillable = ['user_id'];
 
     // public function details(){
     //     return $this->belongsToMany(User::class);
     // }
 
-    // public function user(){
-    //     return $this->belongsTo(User::class);
-    // }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     // public function course(){
     //     return $this->belongsToMany(Course::class);
     // }

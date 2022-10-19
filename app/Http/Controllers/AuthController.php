@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         $data   = [
             'token'     => $token,
-            'user'      => Auth::user()->detail,
+            'user'      => Auth::user()->details,
         ];
 
         return apiResponse(200, 'success', 'berhasil login', $data);
