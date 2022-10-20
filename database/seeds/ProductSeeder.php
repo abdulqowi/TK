@@ -1,5 +1,7 @@
 <?php
 
+use App\ProductDetails;
+use App\Receipt;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +16,13 @@ class ProductSeeder extends Seeder
     public function run()
     {
         for     ($i = 0; $i <51; $i++){
-            DB::table('product_details',)->insert([
-                'product_list' =>random_int(0,666),
-                'total_price' =>Str::random(6),
+            $id= ProductDetails::insertGetId([
+                'product_list' =>rand(0,666),
+                    'total_price' =>rand(1000,10000000),
             ]);
+            // Receipt::insert([
+            //     'product_details_id' =>$id
+            // ]);
         };
     }
 }

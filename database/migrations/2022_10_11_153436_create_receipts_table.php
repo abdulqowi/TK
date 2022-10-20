@@ -16,16 +16,10 @@ class CreateReceiptsTable extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            // $table->foreignId('courses_list_id');
-            // $table->foreignId('product_details_id');
-
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('no action');
+            $table->foreignId('product_details_id')->nullable();
+            $table->foreignId('course_id')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate(DB::raw('NO ACTION'))
-                ->onDelete(DB::raw('NO ACTION'));
 
         });
     }

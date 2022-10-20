@@ -7,5 +7,7 @@ Route::group(
     ['middleware' => 'auth:api'],
     function() {
         require_once('includes/user.php');
+        require_once('includes/course.php');
+        require_once('includes/product.php');
     }
 );

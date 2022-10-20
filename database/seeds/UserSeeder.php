@@ -1,7 +1,9 @@
 <?php
 
 
+
 use App\User;
+use App\Receipt;
 use App\UserDetail;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -35,6 +37,7 @@ class UserSeeder extends Seeder
                 'sex' => $sex[array_rand($sex)],
                 'created_at' => date('Y-m-d H:i:s')
             ]);
+            
         }
         Artisan::call('passport:install');
     }

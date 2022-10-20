@@ -8,9 +8,8 @@ class ProductDetails extends Model
 {
     protected $guarded =[];
 
-    public function receipt()
-    {
-        return $this->belongsToMany(receipt::class);
+    public function receipt(){
+        return $this->belongsTo(Receipt::class);
     }
 }
 

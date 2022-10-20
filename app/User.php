@@ -2,12 +2,13 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Receipt;
+use App\UserDetail;
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Passport\HasApiTokens;
-use PhpParser\Node\Stmt\Return_;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -42,5 +43,8 @@ class User extends Authenticatable
 
     public function detail() {
         return $this->belongsToMany(UserDetail::class,'id');
+    }
+    public function receipt(){
+        return $this->hasMany(Receipt::class);
     }
 }
