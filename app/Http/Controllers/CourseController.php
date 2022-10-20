@@ -47,8 +47,8 @@ class CourseController extends Controller
                     'total_price' => $request->total_price,
                     'created_at' => date ('Y-m-d H:i:s')
                 ]);
-                return apiResponse(200, 'success', 'berhasil ditambah:',$id);
             });
+            return apiResponse(200, 'success', 'berhasil ditambah:');
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
@@ -75,8 +75,8 @@ class CourseController extends Controller
                     'total_price' => $request->total_price,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
-                return apiResponse(200,'success', 'berhasil diedit',$id);
             });
+            return apiResponse(200,'success', 'berhasil diedit',$id);
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }

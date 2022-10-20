@@ -19,10 +19,8 @@ class ProductSeeder extends Seeder
             $id= ProductDetails::insertGetId([
                 'product_list' =>rand(0,666),
                     'total_price' =>rand(1000,10000000),
+                'created_at' => date('Y-m-d H:i:s')
             ]);
-            // Receipt::insert([
-            //     'product_details_id' =>$id
-            // ]);
         };
     }
 }
