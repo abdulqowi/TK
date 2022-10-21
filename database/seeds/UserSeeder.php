@@ -19,6 +19,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        User::insertGetId([
+            'parent_name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('12345678'),
+            'role' => '1',
+            'phone' =>'08112345678',
+        ]);
+
         $faker = \Faker\Factory::create();  
         for($i = 0; $i < 51; $i++) {
             $id = User::insertGetId([
@@ -35,11 +43,6 @@ class UserSeeder extends Seeder
                 'student_name' => $faker ->name,
                 'address' => Str::random(10),
                 'sex' => $sex[array_rand($sex)],
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
-            
-            Receipt::insert([
-                'user_id' => $id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
         }
