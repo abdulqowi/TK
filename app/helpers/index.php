@@ -12,3 +12,9 @@ function apiResponse($code, $status, $message, $data = []) {
     ];
     return Response::json($data, $code);
 }
+
+function scopeGetIdByName($query, $name)
+    {
+        return $query->where('name', $name)->first()->id;
+    }
+

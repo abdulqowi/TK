@@ -7,9 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetails extends Model
 {
     protected $guarded =[];
-
-    public function receipt(){
-        return $this->belongsTo(Receipt::class);
-    }
 }
 

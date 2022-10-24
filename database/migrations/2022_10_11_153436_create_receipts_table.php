@@ -18,8 +18,10 @@ class CreateReceiptsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('no action');
             $table->foreignId('product_details_id')->nullable()-> onDelete('cascade');
+            $table->unsignedBigInteger('quantity')->default(0);
             $table->foreignId('course_id')->nullable()->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
 
         });
     }

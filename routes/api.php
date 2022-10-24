@@ -9,6 +9,7 @@ Route::group(
     function () {
         Route::get('/product', 'ProductDetailController@index');
         Route::get('/product/{id}', 'ProductDetailController@show');
+        require_once('includes/receipt.php');
         Route::middleware('admin')->group(function () {
             require_once('includes/user.php');
             require_once('includes/course.php');

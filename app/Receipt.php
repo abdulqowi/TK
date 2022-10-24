@@ -10,6 +10,9 @@ class Receipt extends Model
         return $this->belongsTo(User::class);
     }
     public function course(){
-        return $this->belongsTo(Course::class,'id');
-    }
+        return $this-> belongsTo(Course::class);   
+        }
+        public function product(){
+            return $this->belongsTo(ProductDetails::class,'product_details_id');
+        }
 }
