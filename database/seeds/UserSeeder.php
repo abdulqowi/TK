@@ -37,12 +37,21 @@ class UserSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s')
             ]);
 
-            $sex = ['L', 'P'];
+            $gender = ['L', 'P'];
             UserDetail::insert([
                 'user_id' => $id,
                 'student_name' => $faker ->name,
                 'address' => Str::random(10),
-                'sex' => $sex[array_rand($sex)],
+                'mother'        => $faker ->name,
+                'mother_phone'         =>random_int(0,666),
+                'mother_email'         => $faker ->name,
+                'mother_job'         => Str::random(5), 
+                'mother_degree'    => Str::random(5),
+                'father_job' =>     Str::random(5),
+                'birthday' => Str::random(5),
+                'birthplace' => Str::random(5),
+                'father_degree' => Str::random(5),
+                'gender' => $gender[array_rand($gender)],
                 'created_at' => date('Y-m-d H:i:s')
             ]);
         }

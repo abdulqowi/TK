@@ -12,12 +12,11 @@ class ReceiptSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 51; $i++) {
-            Receipt::insert([
+            Receipt::create([
             'user_id' => rand(1,51),
             'product_details_id' => rand(1,51),
             'course_id' => rand(1,5),
+            'total_price' =>rand(1,5),
             ]);
-        }
     }
 }

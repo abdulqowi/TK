@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
         for     ($i = 0; $i <51; $i++){
             $id= ProductDetails::insertGetId([
                 'product_list' =>rand(0,666),
-                    'total_price' =>rand(1000,10000000),
+                    'total_price' =>rand(1000,100000),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
         };

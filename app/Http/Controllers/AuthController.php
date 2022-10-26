@@ -57,20 +57,44 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $rules = [
-            'name'=> 'required',
+            'parent_name'=> 'required',
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8',
             'phone'     => 'required',
+            'student_name' => 'required',
+            'father_job' => 'required',
+            'birthday'     => 'required',
+            'birthplace' => 'required',
+            'father_degree' => 'required',
+            'address'=>'required',
+            'mother'     => 'required',
+            'mother_phone' => 'required',
+            'mother_email' => ' required',
+            'mother_job' => 'required',
+            'mother_degree' => 'required',
+            'gender' => 'required',
+
         ];
 
         $message = [
-            'name.required'     => 'Mohon isikan nama anda',
+            'parent_name.required'=> 'Mohon isikan nama anda',
             'email.required'    => 'Mohon isikan email anda',
             'email.email'       => 'Mohon isikan email valid',
             'email.unique'      => 'Email sudah terdaftar',
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
             'phone.required'    => 'Mohon isikan nomor hp anda',
+            'father_degree.required' => "Mohon isikan Pendidikan terakhir",
+            'father_job.required' => "Mohon isikan pekerjaan",
+            'birthday.required' => 'Mohon isikan Tanggal Lahir',
+            'birthplace.required' => 'Mohon isikan tempat lahir',
+            'mother.required'    => 'Mohon isikan nama Ibu',
+            'mother_job.required' => "Mohon isikan pekerjaan",
+            'mother_phone.required' => "Mohon isikan Nomor telepon",
+            'mother_degree.required' => "Mohon isikan Pendidikan terakhir",
+            'mother_email.email' => "Masukan Email",
+            'address'=>"Masukan alamat",
+            'gender.required' => "Masukan Gender",
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -82,7 +106,7 @@ class AuthController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $id = User::insertGetId([
-                    'parent_name'  => $request->name,
+                    'parent_name'  => $request->parent_name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'phone'         => $request->phone,
@@ -90,10 +114,19 @@ class AuthController extends Controller
                 ]);
 
                 UserDetail::insert([
-                    'user_id'       => $id,
+                    'user_id'       => $id    ,
                     'address'       => $request->address,
-                    'student_name' => $request->student_name,
-                    'created_at'    => date('Y-m-d H:i:s')
+                    'student_name'  => $request->student_name,
+                    'gender'        => $request->gender,
+                    'mother'        => $request->mother,
+                    'mother_phone'         => $request->mother_phone,
+                    'mother_email'         => $request->mother_email,
+                    'mother_job'         => $request->mother_job,
+                    'mother_degree'    => $request->mother_degree,
+                    'father_job' => $request->father_job,
+                    'birthday' => $request->birthday,
+                    'birthplace' => $request->birthplace,
+                    'father_degree' => $request->father_degree,
                 ]);
             });
 

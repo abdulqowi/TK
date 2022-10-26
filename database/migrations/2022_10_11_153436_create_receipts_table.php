@@ -20,6 +20,7 @@ class CreateReceiptsTable extends Migration
             $table->foreignId('product_details_id')->nullable()-> onDelete('cascade');
             $table->unsignedBigInteger('quantity')->default(0);
             $table->foreignId('course_id')->nullable()->onDelete('cascade');
+            $table->decimal('total_price',15,2);
             $table->timestamps();
             $table->softDeletes();
 

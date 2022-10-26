@@ -36,13 +36,14 @@ class ReceiptController extends Controller
         } try {
             DB::transaction(function ()use($request,$productDetails) {
                 Receipt::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => auth()->user()->id,
                     'product_details_id' => $productDetails->id,
-                    
                     'quantity' => request('quantity'),
+                    'total_price' => $productDetails->total_price,
+
                  ]);
-                 return apiResponse(200,'success', $request);
-            });
+                });
+            return apiResponse(200,'success','list:',$request);
         } catch (Exception $e){
             return apiResponse(400,'error',$e->getMessage());
         };
@@ -59,11 +60,13 @@ class ReceiptController extends Controller
         $course = Course::find(request('course_id'));
         if ($validator->fails()){
             return apiResponse(422,'error', $validator->errors()->first());
-        } try {
+        } 
+        try {
             DB::transaction(function ()use($course) {
                 Receipt::create([
-                    'user_id' => auth()->id(),
-                    'course_id' => $course->id,                    
+                    'user_id' => 1,
+                    'course_id' => $course->id,
+                    'total_price'=>$course->total_price,               
                  ]);
                 });
             return apiResponse(200,'success','list:', $course);
@@ -71,6 +74,11 @@ class ReceiptController extends Controller
             return apiResponse(400,'error',$e->getMessage());
         };
     }
+
+    public function userBill ($id){
+        $receipt = Receipt::with('user','course','product') ->where('user_id',$id)->get(['product_details_id','quantity','course_id',]);
+            return apiResponse(200,'success','list:', $receipt);
+    } 
     
 
     

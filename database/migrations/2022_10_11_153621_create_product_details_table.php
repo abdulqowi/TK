@@ -16,7 +16,7 @@ class CreateProductDetailsTable extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_list');
-            $table->string('total_price');
+            $table->decimal('total_price',14,1);
             $table->timestamps();
         });
     }
