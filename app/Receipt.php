@@ -15,7 +15,7 @@ class Receipt extends Model
     public function product(){
         return $this->belongsTo(ProductDetails::class);
     }
-    public function getTotalPrice(){
+    public function getPrice(){
         return ProductDetails::where('id',$this ->product_details_id)->value('total_price');
         return Course::where('id',$this ->course_id)->value('total_price');
     }

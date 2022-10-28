@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceiptsTable extends Migration
+class CreateReceiptDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class CreateReceiptsTable extends Migration
      */
     public function up()
     {
-        Schema::create('receipts', function (Blueprint $table) {
+        Schema::create('receipt_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('no action');
+            $table->foreignId('receipt_id')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('product_details_id')->nullable()-> onDelete('cascade');
             $table->unsignedBigInteger('quantity')->default(0);
             $table->foreignId('course_id')->nullable()->onDelete('cascade');

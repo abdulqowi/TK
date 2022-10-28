@@ -102,7 +102,7 @@ class UserController extends Controller
                 ]);
 
                 UserDetail::create([
-                    'user_id'       => $user    ,
+                    'user_id'       => $user,
                     'address'       => $request->address,
                     'student_name'  => $request->student_name,
                     'gender'        => $request->gender,
