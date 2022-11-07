@@ -53,9 +53,6 @@ class ReceiptDetailController extends Controller
             return apiResponse(400,'error',$e->getMessage());
         }
     }
-
-    
-
     public function courseStore(){
         $rules =[
             'course_id' =>'required',
@@ -72,6 +69,7 @@ class ReceiptDetailController extends Controller
             DB::transaction(function ()use($course) {
                 ReceiptDetail::create([
                     'user_id' => auth()->user()->id,
+                    'quantity' => '1',
                     'course_id' => $course->id,
                     'total_price'=>$course->total_price,               
                  ]);

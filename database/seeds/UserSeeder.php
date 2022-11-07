@@ -24,11 +24,11 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
             'role' => '1',
-            'phone' =>'08112345678',
+            'phone' => '08112345678',
         ]);
 
-        $faker = \Faker\Factory::create();  
-        for($i = 0; $i < 51; $i++) {
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < 51; $i++) {
             $id = User::insertGetId([
                 'parent_name'      =>  $faker->name,
                 'email'     =>  $faker->unique()->safeEmail,
@@ -40,12 +40,12 @@ class UserSeeder extends Seeder
             $gender = ['L', 'P'];
             UserDetail::insert([
                 'user_id' => $id,
-                'student_name' => $faker ->name,
+                'student_name' => $faker->name,
                 'address' => Str::random(10),
-                'mother'        => $faker ->name,
-                'mother_phone'         =>random_int(0,666),
-                'mother_email'         => $faker ->name,
-                'mother_job'         => Str::random(5), 
+                'mother'        => $faker->name,
+                'mother_phone'         => random_int(0, 666),
+                'mother_email'         => $faker->name,
+                'mother_job'         => Str::random(5),
                 'mother_degree'    => Str::random(5),
                 'father_job' =>     Str::random(5),
                 'birthday' => Str::random(5),
@@ -58,4 +58,3 @@ class UserSeeder extends Seeder
         Artisan::call('passport:install');
     }
 }
-

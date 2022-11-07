@@ -41,7 +41,7 @@ class AuthController extends Controller
         ];
 
         if (!Auth::attempt($data)) {
-            return apiResponse(400, 'error', 'Data tidak terdaftar, akun bodong ya? Fuck u');
+            return apiResponse(400, 'error', 'Anda tidak terdaftar');
         }
 
         $token = Auth::user()->createToken('API Token')->accessToken;
