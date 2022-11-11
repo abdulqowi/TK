@@ -72,16 +72,6 @@ class UserController extends Controller
             'password.required' => 'Mohon isikan password anda',
             'password.min'      => 'Password wajib mengandung minimal 8 karakter',
             'phone.required'    => 'Mohon isikan nomor hp anda',
-            'birthday.required' => 'Mohon isikan Tanggal Lahir',
-            'birthplace.required' => 'Mohon isikan tempat lahir',
-            'father_degree.required' => "Mohon isikan Pendidikan terakhir",
-            'father_job.required' => "Mohon isikan pekerjaan",
-            'mother.required'    => 'Mohon isikan nama Ibu',
-            'mother_job.required' => "Mohon isikan pekerjaan",
-            'mother_phone.required' => "Mohon isikan Nomor telepon",
-            'mother_degree.required' => "Mohon isikan Pendidikan terakhir",
-            'mother_email.email' => "Masukan Email",
-            'gender.required' => "Masukan Gender",
             'address'       => "masukan address",
         ];
 
