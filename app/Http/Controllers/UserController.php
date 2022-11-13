@@ -46,6 +46,42 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            'parent_name'      => 'required',
+            'email'     => 'required|email|unique:users',
+            'password'  => 'required|min:8',
+            'phone'     => 'required',
+            'student_name' => 'required',
+            'birthday '     => 'required',
+            'birthplace'     => 'required',
+            'father_job' => 'required',
+            'father_degree' => 'required',
+            'address' => ' required',
+            'mother'     => 'required',
+            'mother_phone' => 'required',
+            'mother_email' => ' required',
+            'mother_job' => 'required',
+            'mother_degree' => 'required',
+            'gender' => 'required',
+        ];
+
+        $message = [
+            'parent_name.required'     => 'Mohon isikan nama anda',
+            'email.required'    => 'Mohon isikan email anda',
+            'email.email'       => 'Mohon isikan email valid',
+            'email.unique'      => 'Email sudah terdaftar',
+            'password.required' => 'Mohon isikan password anda',
+            'password.min'      => 'Password wajib mengandung minimal 8 karakter',
+            'phone.required'    => 'Mohon isikan nomor hp anda',
+            'address'       => "masukan address",
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if ($validator->fails()) {
+            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
+        }
+
         try {
             DB::transaction(function () use ($request) {
                 $user = User::create([
