@@ -51,18 +51,7 @@ class UserController extends Controller
             'email'     => 'required|email|unique:users',
             'password'  => 'required|min:8',
             'phone'     => 'required',
-            'student_name' => 'required',
-            'birthday '     => 'required',
-            'birthplace'     => 'required',
-            'father_job' => 'required',
-            'father_degree' => 'required',
             'address' => ' required',
-            'mother'     => 'required',
-            'mother_phone' => 'required',
-            'mother_email' => ' required',
-            'mother_job' => 'required',
-            'mother_degree' => 'required',
-            'gender' => 'required',
         ];
 
         $message = [
