@@ -20,8 +20,12 @@ class ReceiptDetailController extends Controller
     }
 
     public function show($id){
-        $receipt = ReceiptDetail::findOrFail($id);
-        return apiResponse(200,'success','list',$receipt);
+        try {
+            $receipt = ReceiptDetail::findOrFail($id);
+            return apiResponse(200,'success','list',$receipt);
+        } catch (\Exception $e) {
+            return apiResponse(404,'error',$e->getMessage());
+        }
     }
 
     public function store(){

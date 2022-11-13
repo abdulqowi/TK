@@ -40,7 +40,7 @@ class User extends Authenticatable
     ];
 
     public function detail() {
-        return $this->belongsToMany(UserDetail::class,'id');
+        return $this->belongsTo(UserDetail::class,'id');
     }
     public function receipt(){
         return $this->hasMany(Receipt::class);

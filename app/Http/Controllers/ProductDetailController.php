@@ -16,24 +16,11 @@ class ProductDetailController extends Controller
     }
 
     public function store(Request $request){
-        $rules = [
-            'product_list' =>'required',
-            'total_price' =>'required',
-        ];
-        $messages = [
-            'product_list.required' => 'Name is required',
-            'total_price.required' => 'total_price is required',
-        ];
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if ($validator->fails()){
-            return apiResponse(400,'error', $validator->errors());
-        }
         try { 
             DB::transaction(function ()use($request) { 
-                ProductDetails::insertGetId([
-                    'product_list' => $request->product_list,
-                    'total_price' => $request->total_price,
-                    'created_at' => date('Y-m-d H:i:s')
+                ProductDetails::create([
+                    'price' => $request-> price,
+                    'day' => $request-> date,
                 ]);
             });
             return apiResponse(200,'success','success');
@@ -44,23 +31,12 @@ class ProductDetailController extends Controller
     }
 
     public function update(Request $request, $id){
-        $rules = [
-            'product_list' =>'required',
-            'total_price' =>'required',
-        ];
-        $messages = [
-            'product_list.required' => 'Name is required',
-            'total_price.required' => 'total_price is required',
-        ];
-        $validator = Validator::make($request->all(),$rules,$messages);
-        if ($validator->fails()){
-            return apiResponse(400,'error', $validator->errors());
-        }
         try { 
             DB::transaction(function ()use($request,$id) {
                 ProductDetails::where('id',$id)->update([
-                    'product_list' => $request->product_list,
-                    'total_price' => $request->total_price,]); 
+                    'price' => $request-> price,
+                    'day' => $request-> date,
+                ]); 
             });
             return apiResponse(200,'success','berhasil  diedit',$id);
             }catch  (Exception $e) {

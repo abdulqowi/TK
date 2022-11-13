@@ -18,19 +18,8 @@ class CreateUserDetailsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
-            $table->string('mother');   
-            $table->string('mother_email');
-            $table->string('student_name');
-            $table->string('mother_phone');
-            $table->string('birthplace');
-            $table->string('birthday');
-            $table->string('father_degree');
-            $table->string('mother_degree');
-            $table->string('father_job');
-            $table->string('mother_job');
             $table->string('address');
-            $table->enum('gender', ['L', 'P']);
-
+            $table->text('image')->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

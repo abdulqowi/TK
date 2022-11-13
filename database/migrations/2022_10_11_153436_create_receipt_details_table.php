@@ -9,14 +9,13 @@ class CreateReceiptDetailsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * jgn diubah dulu
      * @return void
      */
     public function up()
     {
         Schema::create('receipt_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('receipt_id')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('product_details_id')->nullable()-> onDelete('cascade');
             $table->unsignedBigInteger('quantity')->default(0);
