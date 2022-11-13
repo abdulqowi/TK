@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Exception;
 use App\Master;
+use Illuminate\Http\Request;
+
 
 class MasterController extends Controller
 {
@@ -26,7 +28,7 @@ class MasterController extends Controller
             return apiResponse(200, 'success','list :', $master);
         }
         
-        catch{Exception $e} {
+        catch(Exception $e) {
             return apiResponse(400, 'error', $e);
         }
         
