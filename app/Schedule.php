@@ -10,10 +10,10 @@ class Schedule extends Model
 {
     protected $guarded = [];
     public function detail(){
-        $this->belongsTo(UserDetail::class, 'user_id');
+        $this->hasMany(UserDetail::class, 'user_id');
     }
 
     public function master(){
-        $this->belongsTo(Master::class);
+        $this->hasMany(Master::class);
     }
 }
