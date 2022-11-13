@@ -36,8 +36,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::with('user_detail', 'receipt')->where('id', $id)->first();
+        $user = User::where('id', $id)->first();
         if ($user) {
+            $user->user_detail->image = $user->user_detail->imagePath;
             return apiResponse(200, 'success', '', $user);
         }
 
@@ -132,8 +133,7 @@ class UserController extends Controller
                     'image' => $name,
                 ]);
             }
-            $update = UserDetail::where('id',$this->id)->first();
-
+            $update = UserDetail::where('id',$this->id)->get();
             return apiResponse(202, 'success', 'user berhasil disunting',$update);
         }catch (Exception $e){
             return apiResponse (400, 'error', 'error', $e);
