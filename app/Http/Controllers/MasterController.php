@@ -16,7 +16,7 @@ class MasterController extends Controller
 
     public function show($id){
         $id = Master::where('id', $id)->first();
-        return apiResponse(200,'success','list',$master);
+        return apiResponse(200,'success','list',$id);
     }
 
     public function store(Request $request){

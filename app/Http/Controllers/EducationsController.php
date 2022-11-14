@@ -6,6 +6,7 @@ use Exception;
 use App\Education;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class EducationsController extends Controller
@@ -14,6 +15,10 @@ class EducationsController extends Controller
     public function index()
     {
         $edu = Education::get();
+
+        foreach($edu as $data){
+            $data -> image = asset('public/images/Register') . '/' .$data -> image;
+        }
 
         return apiResponse(200, 'success', 'List Edukasi', $edu);
     }
@@ -52,9 +57,10 @@ class EducationsController extends Controller
             $destination = base_path('public/images/Register');
             $request->file('image')->move($destination,$image);
 
-            DB::transaction(function () use ($request) {
-                Education::insert([
-                    'user_id' => $request->user_id,
+    
+            DB::transaction(function () use ($request ) {
+                 Education::insert([
+                    'user_id' => auth()->user()->id,
                     'title' => $request->title,
                     'content' => $request->content,
                     'desc' => $request->desc,
@@ -71,41 +77,44 @@ class EducationsController extends Controller
     //Edit educations
     public function update(Request $request, $id)
     {
-        $rules = [
-            'user_id' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'desc' => 'required',
-            'image' => 'required',
-        ];
-        $message = [
-            'user_id.required' => 'Enter user id',
-            'title.required' => 'Enter title',
-            'content.required' => 'Enter content',
-            'desc.required' => 'Enter desc',
-            'image.required' => 'Enter image',
-        ];
-        $validator = Validator::make($request->all(), $rules, $message);
-        if ($validator->fails()) {
-            return apiResponse(400, 'error', 'error', $validator->errors());
-        }
+        // dd($request->all());
         try {
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $image = strtotime(date('Y-m-d H:i:s'));
-            $destination = base_path('public/images/');
-            $request->file('image')->move($destination,$image);
-
-            DB::transaction(function () use ($request, $id, $image) {
-                Education::where('id', $id)->update([
-                    'user_id' => $request->user_id,
-                    'title' => $request->title,
-                    'content' => $request->content,
-                    'desc' => $request->desc,
-                    'image' => $image,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
+            DB::transaction(function () use ($request, $id) {
+                
+                if ($request->has('image')) {
+                    $oldImage = Education::where('id', $id)->first()->image;
+    
+                    if ($oldImage) {
+                        $pleaseRemove = base_path('public/images/Register/') . $oldImage;
+    
+                        if (file_exists($pleaseRemove)) {
+                            unlink($pleaseRemove);
+                        }
+                    }
+    
+                    $extension = $request->file('image')->getClientOriginalExtension();
+    
+                    $name = date('YmdHis') . '' . $id . '.' . $extension;
+    
+                    $path = base_path('public/images/Register');
+    
+                    $request->file('image')->move($path, $name);
+    
+                    Education::where('id', $id)->update([
+                        'user_id' => auth()->user()->id,
+                        'title' => $request->title,
+                        'content' => $request->content,
+                        'desc' => $request->desc,
+                        'image' => $name,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             });
-            return apiResponse(202,'success', 'berhasil diedit');
+            $update = Education::where('id',$id)->first();
+            $update -> image = asset('public/images/Register') . '/' .$update -> image;
+            return apiResponse(202, 'success', 'user berhasil disunting',$update);
+            
+            // return apiResponse(202,'success', 'berhasil diedit');
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
