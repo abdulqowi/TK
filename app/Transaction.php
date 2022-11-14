@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Master;
 use App\UserDetail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,12 +10,16 @@ class Transaction extends Model
 {
     protected $guarded = [];
     public function detail(){
-        $this->belongsTo(UserDetail::class, 'user_id');
+        $this->hasMany(UserDetail::class, 'user_id');
     }
 
-    public function user =  []
-        $this->belongsTo(User::class);
-    }
+    // public function user(){
+    //     $this->hasOne(User::class);
+    // }
 
-    public function
+    public function master(){
+        $this->hasMany(Master::class);
+    }
+        
 }
+

@@ -9,6 +9,6 @@ class Education extends Model
 {
     protected $guarded = [];
     public function user(){
-        $this->belongsTo(User::class);
+        $this->hasMany(User::class);
     }
 }
