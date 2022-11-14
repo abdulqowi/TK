@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Schema;
 class CreateReceiptsTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
+     * 
+     * Ini table Transaksi
      * @return void
      */
     public function up()
@@ -16,7 +16,7 @@ class CreateReceiptsTable extends Migration
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->date('date');
+            $table->foreignId('price');
             $table->string('status')->nullable();
             $table->timestamps();
         });

@@ -11,12 +11,15 @@ class CreateProductDetailsTable extends Migration
      *
      * @return void
      */
+
+
+    // Ini table master
     public function up()
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_list');
-            $table->decimal('total_price',14,1);
+            $table->decimal('price',14,1);
+            $table->string('day');
             $table->timestamps();
         });
     }

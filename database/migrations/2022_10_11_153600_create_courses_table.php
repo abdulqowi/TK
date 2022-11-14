@@ -8,15 +8,16 @@ class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * ini tabel schedule
      * @return void
      */
     public function up()
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('course_name');
-            $table->string('total_price');
+            $table->foreignId('user_id');
+            $table->foreignId('day');
+            $table->string('status');
             $table->timestamps();
         });
     }
