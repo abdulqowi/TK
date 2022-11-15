@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Master;
 use Exception;
 use App\Schedule;
 use Illuminate\Http\Request;
@@ -15,16 +16,18 @@ class SchedulesController extends Controller
     }
 
     public function store(Request $request){
+        $master = Master::where('day', $request->day)->first();
         try {
-            $schedule = Schedule::create([
-                'user_id' => auth()->user()->id,
-                'day' => date('Y-m-d'),
-                'status' => $request->status,
-            ]); 
-            return apiResponse(200, 'success','list :', $schedule);
+                 Schedule::create([
+                    'user_id' => request('user_id'),
+                    'day' => $master->id, 
+                    'status' => request('status'),
+                ]); 
+            
+            return apiResponse(200, 'success','list :', $master);
         }
-        
         catch(Exception $e) {
+            dd($e);
             return apiResponse(400, 'error', $e);
         }
         
@@ -40,9 +43,9 @@ class SchedulesController extends Controller
                 ]); 
             });
             return apiResponse(200,'success','berhasil  diedit',$id);
-            }catch  (Exception $e) {
-                return apiResponse(200,'error','error',$e);
-            }
+        }catch  (Exception $e) {
+            return apiResponse(200,'error','error',$e);
+        }
     }
 
     public function destroy($id){

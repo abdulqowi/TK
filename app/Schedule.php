@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    protected $guarded = [];
+    protected $table ='schedules'; 
+    protected $fillable = ['user_id' ,'day','status'];
+
     public function detail(){
         $this->hasMany(UserDetail::class, 'user_id');
     }
 
     public function master(){
-        $this->hasMany(Master::class);
+        $this->hasMany(Master::class,'masters_id');
     }
 }
