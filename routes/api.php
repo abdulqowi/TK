@@ -19,6 +19,7 @@ Route::group(
             require_once('includes/product.php');
             require_once('includes/education.php');
             require_once('includes/master.php');
+            require_once('includes/schedule.php');
         });
     }
 );
