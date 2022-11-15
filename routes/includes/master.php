@@ -5,10 +5,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['prefix' => 'education'],
+    ['prefix' => 'master'],
     function () {
-        Route::post('/create','EducationsController@store');
-        Route::post('/{id}', 'EducationsController@update');
-        Route::delete('/{id}','EducationsController@destroy');
+        Route::get('/', 'MasterController@index');
+        Route::post('/create','MasterController@store');
+        Route::post('/{id}', 'MasterController@update');
+        Route::delete('/{id}','MasterController@destroy');
 
     });
