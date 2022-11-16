@@ -22,10 +22,11 @@ class MasterController extends Controller
 
     public function store(Request $request){
         try {
+
             $master = Master::create([
                 'user_id' => auth()->user()->id,
                 'price' => $request->price,
-                'day' => date('Y-m-d'),
+                'day' => $request->day,
             ]); 
             return apiResponse(200, 'success','list :', $master);
         }
