@@ -27,22 +27,19 @@ class SchedulesController extends Controller
             return apiResponse(200, 'success','list :', $master);
         }
         catch(Exception $e) {
-            dd($e);
+            // dd($e);
             return apiResponse(400, 'error', $e);
         }
         
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request,$id){
         try { 
-            DB::transaction(function ()use($request,$id) {
-                Schedule::where('id',$id)->update([
+        $schedule = Schedule::where('id',$id)->update([
                     'user_id' => auth()->user()->id,
-                    'day' => date('Y-m-d'),
                     'status' => $request->status,
                 ]); 
-            });
-            return apiResponse(200,'success','berhasil  diedit',$id);
+            return apiResponse(200,'success','berhasil  diedit',$schedule);
         }catch  (Exception $e) {
             return apiResponse(200,'error','error',$e);
         }
