@@ -55,7 +55,6 @@ class UserController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'phone'         => $request->phone,
-                    'created_at' => date('Y-m-d H:i:s')
                 ]);
 
                 UserDetail::create([

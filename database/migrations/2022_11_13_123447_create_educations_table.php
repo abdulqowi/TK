@@ -19,7 +19,6 @@ class CreateEducationsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('title');
             $table->text('content');
-            $table->longtext('desc');
             $table->text('image');
 
         });
