@@ -4,11 +4,6 @@
 /* -------------------------------------------------------------------------- */
 use Illuminate\Support\Facades\Route;
 
-Route::group(
-    ['prefix' => 'education'],
-    function () {
-        Route::post('/create','EducationsController@store');
-        Route::post('/{id}', 'EducationsController@update');
-        Route::delete('/{id}','EducationsController@destroy');
-
-    });
+    Route::post('/education/create','EducationsController@store');
+    Route::post('/education/{id}', 'EducationsController@update');
+    Route::delete('/education/{id}','EducationsController@destroy');
