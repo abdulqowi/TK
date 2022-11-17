@@ -19,7 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id');
             $table->foreignId('day')->nullable()-> onDelete('cascade');
-            $table->foreignId('price')->nullable()-> onDelete('cascade');
+            //$table->foreignId('price')->nullable()-> onDelete('cascade');
             $table->string('status');
         });
 
