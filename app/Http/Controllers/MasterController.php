@@ -38,9 +38,8 @@ class MasterController extends Controller
 
     public function destroy($id){
         try {
-            DB::transaction(function ()use($id) {
+            
                 Master::where('id',$id)->delete();
-            });
             return apiResponse(200,'success','Berhasil dihapus:');
         }catch (Exception $e) {
             return apiResponse(200,'error','error',$e);
@@ -48,15 +47,14 @@ class MasterController extends Controller
     }
 
     public function update(Request $request, $id){
+        //dd($id);
         try { 
-            DB::transaction(function ()use($request,$id) {
-                Master::where('id',$id)->update([
+                 Master::where('id',$id)->update([
                     'user_id' => auth()->user()->id,
-                    'price' => $request-> price,
-                    'day' => $request-> date,
-                ]); 
-            });
-            return apiResponse(200,'success','berhasil  diedit',$id);
+                    'day' => $request->day,
+                ]);
+                $data = Master::where('id',$id)->first();
+            return apiResponse(200,'success','berhasil  diedit',$data);
             }catch  (Exception $e) {
                 return apiResponse(200,'error','error',$e);
             }
