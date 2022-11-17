@@ -27,7 +27,6 @@ class SchedulesController extends Controller
             return apiResponse(200, 'success','list :', $master);
         }
         catch(Exception $e) {
-            dd($e);
             return apiResponse(400, 'error', $e);
         }
         

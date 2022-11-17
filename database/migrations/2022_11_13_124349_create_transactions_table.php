@@ -17,9 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id');
-            $table->dateTime('payment_date');
+            $table->foreignId('price');
             $table->string('status');
-            $table->foreignId('price_id');
         });
     }
 

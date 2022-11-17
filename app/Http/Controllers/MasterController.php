@@ -25,7 +25,6 @@ class MasterController extends Controller
 
             $master = Master::create([
                 'user_id' => auth()->user()->id,
-                'price' => $request->price,
                 'day' => $request->day,
             ]); 
             return apiResponse(200, 'success','list :', $master);

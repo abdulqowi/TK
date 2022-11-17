@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         $data   = [
             'token'     => $token,
-            'user'      => Auth::user()->details,
+            'user'      => Auth::user()->detail,
         ];
 
         return apiResponse(200, 'success', 'berhasil login', $data);
@@ -84,8 +84,7 @@ class AuthController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($request) {
-                $id = User::insertGetId([
+            $id = User::insertGetId([
                     'name'  => $request->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
@@ -97,9 +96,8 @@ class AuthController extends Controller
                     'user_id'       => $id    ,
                     'address'       => $request->address,
                 ]);
-            });
-
-            return apiResponse(201, 'success', 'user berhasil daftar');
+                $id = User:: where( 'id', $id)->first();
+            return apiResponse(201, 'success', 'user berhasil daftar',$id);
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }
