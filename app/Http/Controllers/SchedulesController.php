@@ -18,16 +18,23 @@ class SchedulesController extends Controller
     public function store(Request $request){
         $master = Master::where('day', $request->day)->first();
         try {
-                 Schedule::create([
+                 $id = Schedule::insertGetId([
+                    'created_at' => date('Y-m-d H:i:s'),
                     'user_id' => request('user_id'),
                     'day' => $master->id, 
                     'status' => request('status'),
-                ]); 
-            
-            return apiResponse(200, 'success','list :', $master);
+                ]);
+
+                $data = Schedule::where('schedules.id', $id)
+                ->join('masters', 'masters.id', '=', 'schedules.day')
+                ->select([
+                    'schedules.*', 'masters.day as dayName'
+                ])
+                ->first();
+            return apiResponse(200, 'success','list :', $data);
         }
         catch(Exception $e) {
-            // dd($e);
+            dd($e);
             return apiResponse(400, 'error', $e);
         }
         
