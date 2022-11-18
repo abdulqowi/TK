@@ -17,9 +17,6 @@ class Transaction extends Model
     //     $this->hasOne(User::class);
     // }
 
-    public function master(){
-        $this->hasMany(Master::class);
-    }
         
 }
 

@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('user_id');
             $table->dateTime('payment_date');
             $table->string('status');
-            $table->foreignId('price_id');
+            $table->decimal('price',14,1);
         });
     }
 
