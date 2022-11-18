@@ -21,6 +21,7 @@ Route::group(
             require_once('includes/schedule.php');
             require_once('includes/masterPrice.php');
             require_once ('includes/Notification.php');
+            require_once('includes/transaction.php');
         });
     }
 );

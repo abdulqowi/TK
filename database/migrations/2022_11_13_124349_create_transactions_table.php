@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('user_id');
             $table->decimal('price',14,2);
             $table->string('status');
+            $table->decimal('price',14,1);
         });
     }
 
