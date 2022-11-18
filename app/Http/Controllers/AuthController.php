@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\UserDetail;
 use Exception;
+use App\UserDetail;
+use App\Transaction;
+use Laravel\Passport\Token;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laravel\Passport\RefreshToken;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Passport\RefreshToken;
-use Laravel\Passport\Token;
 
 class AuthController extends Controller
 {
@@ -56,33 +57,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $rules = [
-            'name'=> 'required',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required|min:8',
-            'phone'     => 'required',
-            'address'=>'required',
-
-
-        ];
-
-        $message = [
-            'name.required'=> 'Mohon isikan nama anda',
-            'email.required'    => 'Mohon isikan email anda',
-            'email.email'       => 'Mohon isikan email valid',
-            'email.unique'      => 'Email sudah terdaftar',
-            'password.required' => 'Mohon isikan password anda',
-            'password.min'      => 'Password wajib mengandung minimal 8 karakter',
-            'address'=>"Masukan alamat",
-            'phone.required'    => 'Mohon isikan nomor hp anda',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $message);
-
-        if ($validator->fails()) {
-            return apiResponse(400, 'error', 'Data tidak lengkap ', $validator->errors());
-        }
-
         try {
             $id = User::insertGetId([
                     'name'  => $request->name,
@@ -96,6 +70,7 @@ class AuthController extends Controller
                     'user_id'       => $id    ,
                     'address'       => $request->address,
                 ]);
+
                 $id = User:: where( 'id', $id)->first();
             return apiResponse(201, 'success', 'user berhasil daftar',$id);
         } catch (Exception $e) {

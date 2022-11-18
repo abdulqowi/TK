@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Exception;
 use App\UserDetail;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -43,30 +44,6 @@ class UserController extends Controller
         }
 
         return apiResponse(404, 'not found', 'User tidak ditemukan :(');
-    }
-
-    public function store(Request $request)
-    {
-
-        try {
-            DB::transaction(function () use ($request) {
-                $user = User::create([
-                    'name'  => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'phone'         => $request->phone,
-                ]);
-
-                UserDetail::create([
-                    'user_id'       => $user,
-                    'address'       => $request->address,
-                ]);
-            });
-
-            return apiResponse(201, 'success', 'user berhasil daftar');
-        } catch (Exception $e) {
-            return apiResponse(400, 'error', 'error', $e);
-        }
     }
 
     public function update(Request $request)

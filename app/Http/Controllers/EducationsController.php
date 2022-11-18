@@ -63,7 +63,6 @@ class EducationsController extends Controller
                     'user_id' => auth()->user()->id,
                     'title' => $request->title,
                     'content' => $request->content,
-                    'desc' => $request->desc,
                     'image' => $request->image,
                     'created_at' => date ('Y-m-d H:i:s')
                 ]);
@@ -104,7 +103,6 @@ class EducationsController extends Controller
                         'user_id' => auth()->user()->id,
                         'title' => $request->title,
                         'content' => $request->content,
-                        'desc' => $request->desc,
                         'image' => $name,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);

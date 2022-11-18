@@ -33,18 +33,16 @@ class TransactionsController extends Controller
         }
     }
 
-    public function store(){
-        $master = Master:: find(request('masters_id'));
-        try {
-            Transaction::create([
-                'user_id' => auth()->user()->id,
-                'price' => $master->price ,
-                'status' => request('status '),
-            ]);
-            return apiResponse( 200 , 'success', ' list :', $master ); 
-        } catch (Exception  $e) {
-            return apiResponse(400,'error ', 'store :', $e);
-        }
-    }
+    // public function store(){
+    //     try {
+    //         Transaction::create([
+    //             'user_id' => auth()->user()->id,
+    //             'status' => request('status '),
+    //         ]);
+    //         return apiResponse( 200 , 'success', ' list :', $master ); 
+    //     } catch (Exception  $e) {
+    //         return apiResponse(400,'error ', 'store :', $e);
+    //     }
+    // }
 
 }

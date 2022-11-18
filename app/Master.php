@@ -6,10 +6,9 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Master extends Model
-{
-    protected $table = 'masters';   
+{   
     protected $guarded = [];
     public function user(){
-        $this->hasOne(User::class);
+        $this->belongsTo(User::class);
     }
 }
