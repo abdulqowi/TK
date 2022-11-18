@@ -9,6 +9,7 @@ Route::group(
     ['middleware' => 'auth:api'],
     function () {
         Route::post('/user/edit', 'UserController@update');
+        Route::get('/transaction/{id}','TransactionsController@show');
         Route::post('/transaction/payment', 'TransactionsController@payment');
         require_once('includes/receipt.php');
         require_once('includes/receiptDetail.php');

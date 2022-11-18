@@ -19,7 +19,15 @@ class TransactionsController extends Controller
         return apiResponse('200', 'success','list:',$bill);
     }
 
+    public function show($id){
+        try {
+            $bill = Transaction::where('id',$id) ->first();
+            return apiResponse('200', 'success','list:',$bill);
+        } catch (\Exception $e) {
+            return apiResponse(404, 'error',' error', $e);
+        }
 
+    }
 
     
     public function destroy($id){
