@@ -85,7 +85,8 @@ class UserController extends Controller
                     'image' => $name,
                 ]);
             }
-            $update = UserDetail::where('id',$this->id)->get();
+            $update = UserDetail::where('id',$this->id)->first();
+            $update-> image = asset('assets/images/user/' .$name);
             return apiResponse(202, 'success', 'user berhasil disunting',$update);
         }catch (Exception $e){
             return apiResponse (400, 'error', 'error', $e);
