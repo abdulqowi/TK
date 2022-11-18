@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Exception;
+use App\Master;
+use App\Transaction;
 
 use Exception;
 use App\Transaction;

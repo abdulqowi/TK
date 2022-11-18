@@ -16,6 +16,6 @@ class Schedule extends Model
     }
 
     public function master(){
-        $this->hasMany(Master::class,'masters_id');
-    }
+        $this->belongsTo(Master::class,'day');
+    }  
 }
