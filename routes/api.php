@@ -11,7 +11,6 @@ Route::group(
         Route::post('/user/edit', 'UserController@update');
         require_once('includes/receipt.php');
         require_once('includes/receiptDetail.php');
-        require_once('includes/transaction.php');
         Route::middleware('admin')->group(function () {
             require_once('includes/user.php');
             require_once('includes/course.php');
