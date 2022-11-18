@@ -82,4 +82,16 @@ class TransactionsController extends Controller
         }
     }
 
+    public function update(Request $request,$id){
+        try { 
+        Transaction::where('id',$id)->update([
+                    'status' => $request->status,
+                ]); 
+                $data = Transaction::where('id',$id)->first();
+            return apiResponse(200,'success','berhasil  diedit',$data);
+        }catch  (Exception $e) {
+            return apiResponse(200,'error','error',$e);
+        }
+    }
+
 }
