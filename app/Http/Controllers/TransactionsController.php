@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Exception;
 use App\Master;
 use App\Transaction;
@@ -11,26 +10,48 @@ use Illuminate\Http\Request;
 class TransactionsController extends Controller
 {
     public function index(){
-        $transaction = Transaction::get();
-        return apiResponse(200,'success', 'list:', $transaction);
+        $bill = Transaction::get();
+        return apiResponse('200', 'success','list:',$bill);
     }
 
-    public function show($id){
+    public function store(Request $request){
         try {
-            $receipt = Transaction::findOrFail($id);
-            return apiResponse(200,'success','list',$receipt);
-        } catch (\Exception $e) {
-            return apiResponse(404,'error',$e->getMessage());
+
+            $bill = Transaction::create([
+                'user_id' => auth()->user()->id,
+                'payment_date' => $request->payment_date,
+                'status' => $request->status,
+                'price' => $request->price,
+            ]); 
+            return apiResponse(200, 'success','list :', $bill);
+        }
+        
+        catch(Exception $e) {
+            return apiResponse(400, 'error', $e);
+        }
+        
+    }
+
+    public function update(Request $request,$id){
+        try { 
+        $bill = Transaction::where('id',$id)->update([
+                'user_id' => auth()->user()->id,
+                'payment_date' => $request->payment_date,
+                'status' => $request->status,
+                'price' => $request->price,
+            ]); 
+            return apiResponse(200,'success','berhasil  diedit',$bill);
+        }catch  (Exception $e) {
+            return apiResponse(200,'error','error',$e);
         }
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         try {
-        Transaction::where('id', $id)->delete();
-        return apiResponse(200,'success ', 'list :', $id);
+            Transaction::where('id',$id)->delete();
+            return apiResponse(200,'success','Berhasil dihapus:');
         }catch (Exception $e) {
-            return apiResponse(400,'error ', 'list :', $e);
+            return apiResponse(200,'error','error',$e);
         }
     }
 

@@ -40,17 +40,6 @@ class EducationsController extends Controller
     //create a new educations 
     public function store(Request $request)
     {
-        // $rules = [
-        //     'user_id' => 'required',
-        //     'title' => 'required',
-        //     'content' => 'required',
-        //     'desc' => 'required',
-        //     'image' => 'required',
-        // ];
-        // $validator = Validator::make($request->all(), $rules);
-        // if ($validator->fails()) {
-        //     return apiResponse(400, 'error', 'error', $validator->errors());
-        // }
         try {
             $extension = $request->file('image')->getClientOriginalExtension();
             $image = strtotime(date('Y-m-d H:i:s')).'.'.$extension;

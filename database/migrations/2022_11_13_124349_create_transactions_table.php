@@ -20,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('price',14,2);
             $table->text('image')->nullable();
             $table->string('status');
+            $table->decimal('price',14,1);
         });
     }
 
