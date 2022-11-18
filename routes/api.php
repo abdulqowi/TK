@@ -9,9 +9,9 @@ Route::group(
     ['middleware' => 'auth:api'],
     function () {
         Route::post('/user/edit', 'UserController@update');
+        Route::post('/transaction/payment', 'TransactionsController@payment');
         require_once('includes/receipt.php');
         require_once('includes/receiptDetail.php');
-        require_once('includes/transaction.php');
         Route::middleware('admin')->group(function () {
             require_once('includes/user.php');
             require_once('includes/course.php');

@@ -17,7 +17,7 @@ class EducationsController extends Controller
         $edu = Education::get();
 
         foreach($edu as $data){
-            $data -> image = asset('public/images/Register') . '/' .$data -> image;
+            $data -> image = asset('/images/Register/'.$data -> image) ;
         }
 
         return apiResponse(200, 'success', 'List Edukasi', $edu);
@@ -46,16 +46,16 @@ class EducationsController extends Controller
             $destination = base_path('public/images/Register');
             $request->file('image')->move($destination,$image);
 
-    
-                 $edu = Education::create([
+                $id = Education::insert([
                     'user_id' => auth()->user()->id,
                     'title' => $request->title,
                     'content' => $request->content,
                     'image' => $request->image,
                     'created_at' => date ('Y-m-d H:i:s')
                 ]);
-            
-            return apiResponse(201, 'success', 'berhasil ditambah', $edu);
+            $update = Education::where('id',$id)->first();
+            $update -> image = asset('/images/Register') . '/' .$update -> image;
+            return apiResponse(201, 'success', 'berhasil ditambah',$update);
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }

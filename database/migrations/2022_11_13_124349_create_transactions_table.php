@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id');
             $table->decimal('price',14,2);
+            $table->text('image')->nullable();
             $table->string('status');
             $table->decimal('price',14,1);
         });

@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
 
 
         $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 51; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $id = User::insertGetId([
                 'name'      =>  $faker->name,
                 'email'     =>  $faker->unique()->safeEmail,
