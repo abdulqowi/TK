@@ -42,11 +42,12 @@ class SchedulesController extends Controller
 
     public function update(Request $request,$id){
         try { 
-        $schedule = Schedule::where('id',$id)->update([
+        Schedule::where('id',$id)->update([
                     'user_id' => auth()->user()->id,
                     'status' => $request->status,
                 ]); 
-            return apiResponse(200,'success','berhasil  diedit',$schedule);
+                $data = Schedule::where('id',$id)->first();
+            return apiResponse(200,'success','berhasil  diedit',$data);
         }catch  (Exception $e) {
             return apiResponse(200,'error','error',$e);
         }
