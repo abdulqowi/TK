@@ -10,7 +10,7 @@ class ReceiptDetail extends Model
     protected $appends= ['product_list'];
 
     public function getProductListAttribute(){
-        return ProductDetails:: where('id',$this ->product_details_id)->value('product_list');
+        return ProductDetails:: where('id',$this ->product_details_id)->value('product_list','price');
     }
 
     public function receipt(){

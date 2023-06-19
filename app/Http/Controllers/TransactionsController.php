@@ -82,13 +82,14 @@ class TransactionsController extends Controller
                         'first_name' => $user->name,
                         'email' => $user->email,
                         'phone' => $user->phone,
+                        // 'adress' => $user->user_detail->address,
                     ],
                     
                     'item_details' => [
                         [
-                            'name' => 'Open BO',
+                            'name' => 'Pembayaran Tagihan Sampah',
                             'price' =>$request->price,
-                            'quantity' => 1
+                            'quantity' => 1,
                         ],
                     ],
                 ];
@@ -100,6 +101,7 @@ class TransactionsController extends Controller
                 $response = $client ->request('post',$url,[
                     'auth' => ['SB-Mid-server-Jkq5V28iAslT9qVGRIlEcV8d', ''],
                     'headers' =>$headers,
+                    'access-control-allow-origin' =>'*',
                     'json'=> $json,
                 ]);
         // merapihkan json
