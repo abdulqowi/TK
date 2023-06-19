@@ -25,10 +25,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            DB::transaction(function () use ($id) {
+                UserDetail::where('user_id', $id)->delete();
                 User::where('id', $id)->delete();
-            });
-
             return apiResponse(202, 'success', 'user berhasil dihapus :(');
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);

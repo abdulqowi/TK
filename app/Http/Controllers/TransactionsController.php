@@ -6,6 +6,8 @@ use Exception;
 
 use App\Master;
 use App\Transaction;
+use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,33 +60,58 @@ class TransactionsController extends Controller
 
     public function payment(Request $request)
     {
-        try {
-            $this->id = Auth::user()->id;
-            if ($request->has('image')) {
-                $oldImage = Auth::user()->detail->image;
-    
-                if ($oldImage) {
-                    $pleaseRemove = base_path('public/assets/images/transaction/') . $oldImage;
-    
-                    if (file_exists($pleaseRemove)) {
-                        unlink($pleaseRemove);
-                    }
-                }
-    
-                $extension = $request->file('image')->getClientOriginalExtension();
-    
-                $name = date('YmdHis') . '' . $this->id . '.' . $extension;
-    
-                $path = base_path('public/assets/images/transaction');
-    
-                $request->file('image')->move($path, $name);
-    
-                Transaction::where('user_id', $this->id)->update([
-                    'image' => $name,
+      try {
+        $user= User::where('id', Auth::user()->id)->first();
+        // dd($this->id->name);
+        $request = Transaction::where('id', $user->id)->first();
+        // dd($request);
+        $client = new Client();
+        $url = 'https://api.sandbox.midtrans.com/v2/charge';
+                $json = [
+                    'payment_type' => 'gopay',
+                    'transaction_details' => [
+                        'order_id' => $request->id . Str::random(8),
+                        'gross_amount' => $request->price,
+                    ],
+                
+                    "gopay" => [
+                        "enable_callback"=> true,
+                        "callback_url"=> "someapps://callback"
+                    ],
+                    'customer_details' => [
+                        'first_name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
+                        // 'adress' => $user->user_detail->address,
+                    ],
+                    
+                    'item_details' => [
+                        [
+                            'name' => 'Pembayaran Tagihan Sampah',
+                            'price' =>$request->price,
+                            'quantity' => 1,
+                        ],
+                    ],
+                ];
+                $headers = [
+                    'Accept'=>'appliaction/json',
+                    'Authorization'=>'Basic ' ,
+                    'Content-Type'=>'application/json',
+                ];
+                $response = $client ->request('post',$url,[
+                    'auth' => ['SB-Mid-server-Jkq5V28iAslT9qVGRIlEcV8d', ''],
+                    'headers' =>$headers,
+                    'access-control-allow-origin' =>'*',
+                    'json'=> $json,
                 ]);
-            }
-            $update = Transaction::where('id',$this->id)->get();
-            return apiResponse(202, 'success', 'user berhasil disunting',$update);
+        // merapihkan json
+                $data = json_decode($response->getBody(),true);
+                if ($data['meta'] = 200) {
+                    Transaction::where('id', $request->id)->update([
+                        'status' => 'Menunggu Verifikasi',
+                    ]);
+                return apiResponse(202, 'success', 'berhasil bayar',$data);
+                    }
         }catch (Exception $e){
             return apiResponse (400, 'error', 'error', $e);
         }

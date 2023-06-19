@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MasterPrice;
 use App\User;
 use Exception;
 use App\UserDetail;
@@ -66,13 +67,20 @@ class AuthController extends Controller
                     'created_at' => date('Y-m-d H:i:s')
                 ]);
 
-                UserDetail::insert([
+                UserDetail::create([
                     'user_id'       => $id    ,
                     'address'       => $request->address,
                 ]);
+            
+                Transaction::create([
+                    'user_id' => $id,
+                    'status' => 'Belum Dibayar',
+                    'price' => MasterPrice::first()->price,
+                    
+                ]);    
 
-                $id = User:: where( 'id', $id)->first();
-            return apiResponse(201, 'success', 'user berhasil daftar',$id);
+                $data = User:: where( 'id', $id)->first();
+            return apiResponse(201, 'success', 'user berhasil daftar',$data);
         } catch (Exception $e) {
             return apiResponse(400, 'error', 'error', $e);
         }

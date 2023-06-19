@@ -67,7 +67,6 @@ class EducationsController extends Controller
         // dd($request->all());
         try {
             DB::transaction(function () use ($request, $id) {
-                
                 if ($request->has('image')) {
                     $oldImage = Education::where('id', $id)->first()->image;
     
@@ -98,7 +97,7 @@ class EducationsController extends Controller
             });
             $update = Education::where('id',$id)->first();
             $update -> image = asset('public/images/Register') . '/' .$update -> image;
-            return apiResponse(202, 'success', 'user berhasil disunting',$update);
+            return apiResponse(202, 'success', 'berhasil disunting',$update);
             
             // return apiResponse(202,'success', 'berhasil diedit');
         } catch (Exception $e) {
